@@ -37,20 +37,27 @@ public class NewsDao {
 
     public News select(Context context,String url){
 
+        System.out.println("要查找新闻的网址：" + url);
         NewsDatabase nd = new NewsDatabase(context,NewsDatabase.DB_NAME,null,NewsDatabase.NEWS_DB_V);
         SQLiteDatabase sd = nd.getReadableDatabase();
         String select_sql = "select * from " + NewsDatabase.NEWS_DB_TABLE + " where content_url = ?";
         Cursor cursor = sd.rawQuery(select_sql , new String[]{url});
         if(cursor!=null){
 
-            cursor.moveToFirst();
-            String content_url = cursor.getString(cursor.getColumnIndex("content_url"));
-            String title = cursor.getString(cursor.getColumnIndex("title"));
-            String describle = cursor.getString(cursor.getColumnIndex("describle"));
-            String cover_url = cursor.getString(cursor.getColumnIndex("cover_url"));
-            String content = cursor.getString(cursor.getColumnIndex("content"));
+            if(cursor.moveToFirst()){
 
-            return new News(cover_url,content_url,content,describle,title);
+                String content_url = cursor.getString(cursor.getColumnIndex("content_url"));
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String describle = cursor.getString(cursor.getColumnIndex("describle"));
+                String cover_url = cursor.getString(cursor.getColumnIndex("cover_url"));
+                String content = cursor.getString(cursor.getColumnIndex("content"));
+
+                return new News(cover_url,content_url,content,describle,title);
+
+
+
+            }
+
 
         }
 

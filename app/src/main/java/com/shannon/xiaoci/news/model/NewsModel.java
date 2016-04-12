@@ -6,10 +6,8 @@ import com.shannon.xiaoci.news.model.bean.News;
 import com.shannon.xiaoci.news.model.dao.NewsDao;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
@@ -26,7 +24,6 @@ public class NewsModel {
 
     //从网络获取新闻
     public static ArrayList<News> getNews(Context context , int page){
-
 
         ArrayList<News> al_news = new ArrayList<>();
         Request request = new Request.Builder().url(NEWS_URL + page).build();
@@ -58,21 +55,21 @@ public class NewsModel {
 
 
 
-                    al_news.add(news);
-                    /*
                     News news1 = nd.select(context,jo3.getString("url"));
-                    if(news1!=null){
 
+                    if(news1!=null){
+                        //如果新闻已经存在则查询后注入内存
                         al_news.add(news1);
 
                     }else{
 
-
-                        nd.insert(context,news);
+                        //否则进行网络查询
                         al_news.add(news);
+                        nd.insert(context,news);
 
 
-                    }*/
+
+                    }
 
 
 
