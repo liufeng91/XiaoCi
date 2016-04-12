@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -48,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements SearchViewInter,T
         initData();
         initView();
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        System.out.println("屏幕密度：" + displayMetrics.densityDpi);
+        System.out.println("屏幕宽：" + displayMetrics.widthPixels);
+        System.out.println("屏幕高：" + displayMetrics.heightPixels);
     }
 
     private void initData() {

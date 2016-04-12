@@ -16,6 +16,12 @@ public class MyApplication extends Application{
 
         init();
 
+
+
+
+
+
+
     }
 
     private void init() {
