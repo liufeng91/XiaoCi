@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.shannon.xiaoci.search.model.WordModel;
 
 /**
  * Created by Shannon on 2016/4/10.
@@ -16,7 +17,7 @@ public class MyApplication extends Application{
 
         init();
 
-
+        System.out.println("sd卡的路径：" + WordModel.DATABASE_PATH);
 
 
 

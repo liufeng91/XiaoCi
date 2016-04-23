@@ -9,28 +9,33 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shannon.xiaoci.R;
-import com.shannon.xiaoci.main.view.adapter.DictionaryAdapter;
+import com.shannon.xiaoci.dicbook.dao.DicCollectionDao;
 import com.shannon.xiaoci.main.view.fragment.DicBookFragment;
+import com.shannon.xiaoci.main.view.adapter.DictionaryAdapter;
+import com.shannon.xiaoci.main.view.fragment.SettingFragment;
+import com.shannon.xiaoci.main.view.inter.CollectionViewInter;
+import com.shannon.xiaoci.main.view.inter.SearchViewInter;
+import com.shannon.xiaoci.main.view.presenter.CollectionPrenenter;
 import com.shannon.xiaoci.news.model.NewsModel;
 import com.shannon.xiaoci.news.view.fragment.NewsFragment;
-import com.shannon.xiaoci.main.view.fragment.SettingFragment;
-import com.shannon.xiaoci.main.view.inter.SearchViewInter;
 import com.shannon.xiaoci.search.model.WordModel;
 import com.shannon.xiaoci.search.model.bean.Word;
 import com.shannon.xiaoci.search.presenter.SearchPresenter;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements SearchViewInter,TextWatcher,AdapterView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements SearchViewInter,TextWatcher,AdapterView.OnItemClickListener,CollectionViewInter{
 
 
 
@@ -40,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements SearchViewInter,T
     private ArrayList<Fragment> al_fragments = new ArrayList<>();
     private AutoCompleteTextView am_acet_input;
     private SearchPresenter sp = new SearchPresenter(this);
+    private ImageView am_iv_collection;
+    private TextView am_tv_word,am_tv_mt;
+    private CollectionPrenenter cp = new CollectionPrenenter(this);
 
 
     @Override
@@ -52,9 +60,9 @@ public class MainActivity extends AppCompatActivity implements SearchViewInter,T
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        System.out.println("屏幕密度：" + displayMetrics.densityDpi);
-        System.out.println("屏幕宽：" + displayMetrics.widthPixels);
-        System.out.println("屏幕高：" + displayMetrics.heightPixels);
+        //System.out.println("屏幕密度：" + displayMetrics.densityDpi);
+        //System.out.println("屏幕宽：" + displayMetrics.widthPixels);
+        //System.out.println("屏幕高：" + displayMetrics.heightPixels);
     }
 
     private void initData() {
@@ -84,10 +92,22 @@ public class MainActivity extends AppCompatActivity implements SearchViewInter,T
 
         tabs = (TabLayout) findViewById(R.id.tabs);
         container = (ViewPager) findViewById(R.id.container);
+        container.setOffscreenPageLimit(2);
         am_acet_input = (AutoCompleteTextView) findViewById(R.id.am_acet_input);
+        am_iv_collection = (ImageView) findViewById(R.id.am_iv_collection);
+        am_tv_word = (TextView) findViewById(R.id.am_tv_word);
+        am_tv_mt = (TextView) findViewById(R.id.am_tv_mt);
 
         am_acet_input.addTextChangedListener(this);
         am_acet_input.setOnItemClickListener(this);
+
+
+        am_iv_collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCollectIcon();
+            }
+        });
 
         container.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -114,8 +134,32 @@ public class MainActivity extends AppCompatActivity implements SearchViewInter,T
 
 
 
+
     }
 
+    public void setCollectIcon(){
+
+        String word = am_tv_word.getText().toString();
+        cp.collectWord(word);
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        if(!TextUtils.isEmpty(DicCollectionDao.selectWord(this,am_tv_word.getText().toString()))){
+
+            am_iv_collection.setSelected(true);
+
+
+        }
+
+
+    }
 
     @Override
     public void showResult(Word word) {
@@ -168,6 +212,19 @@ public class MainActivity extends AppCompatActivity implements SearchViewInter,T
         if(wd!=null){
 
             Toast.makeText(this,wd.toString(),Toast.LENGTH_SHORT).show();
+            am_tv_word.setText(wd.getName());
+            am_tv_mt.setText(wd.getType() + "."+wd.getMean());
+
+            if(!TextUtils.isEmpty(DicCollectionDao.selectWord(this,wd.getName()))){
+
+                am_iv_collection.setSelected(true);
+
+
+            }else{
+
+                am_iv_collection.setSelected(false);
+
+            }
 
         }else{
 
@@ -175,4 +232,29 @@ public class MainActivity extends AppCompatActivity implements SearchViewInter,T
         }
 
     }
+
+    @Override
+    public void setCollecIcon(boolean isCollected) {
+
+
+        if(isCollected == true){
+
+
+            am_iv_collection.setSelected(true);
+
+        }else{
+
+
+            am_iv_collection.setSelected(false);
+
+        }
+
+
+    }
+
+
+
+
+
+
 }
