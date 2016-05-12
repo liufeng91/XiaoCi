@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shannon.xiaoci.R;
-import com.shannon.xiaoci.dicbook.dao.DicCollectionDao;
-import com.shannon.xiaoci.search.model.bean.Word;
+import com.shannon.xiaoci.main.model.bean.Word;
+import com.shannon.xiaoci.main.model.dao.DicCollectionDao;
 
 import java.util.ArrayList;
 
@@ -34,12 +34,27 @@ public class DicBookFragment extends Fragment{
         fm_rlv_news = (RecyclerView) view.findViewById(R.id.fm_rlv_news);
         fm_rlv_news.setLayoutManager(new LinearLayoutManager(getContext()));
         fm_rlv_news.setAdapter(nfa);
+
+        refreshData();
+        return view;
+    }
+
+
+    public void refreshData(){
+
+
         al_word.clear();
         al_word.addAll(DicCollectionDao.getAllColl(getContext()));
         nfa.notifyDataSetChanged();
 
-        return view;
     }
+
+
+
+
+
+
+
 
 
     private class NFAdapter extends RecyclerView.Adapter<NFAdapter.ViewHolder>{

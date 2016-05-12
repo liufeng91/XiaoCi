@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.shannon.xiaoci.search.model.WordModel;
+import com.shannon.xiaoci.main.model.WordModel;
 
 /**
  * Created by Shannon on 2016/4/10.

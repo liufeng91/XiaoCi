@@ -2,7 +2,7 @@ package com.shannon.xiaoci.main.view.inter;
 
 import android.database.Cursor;
 
-import com.shannon.xiaoci.search.model.bean.Word;
+import com.shannon.xiaoci.main.model.bean.Word;
 
 /**
  * Created by Shannon on 2016/4/9.

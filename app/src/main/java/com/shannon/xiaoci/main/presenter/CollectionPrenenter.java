@@ -1,8 +1,8 @@
-package com.shannon.xiaoci.main.view.presenter;
+package com.shannon.xiaoci.main.presenter;
 
 import android.text.TextUtils;
 
-import com.shannon.xiaoci.dicbook.dao.DicCollectionDao;
+import com.shannon.xiaoci.main.model.dao.DicCollectionDao;
 import com.shannon.xiaoci.main.view.activity.MainActivity;
 import com.shannon.xiaoci.main.view.inter.CollectionViewInter;
 

@@ -20,18 +20,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shannon.xiaoci.R;
-import com.shannon.xiaoci.dicbook.dao.DicCollectionDao;
-import com.shannon.xiaoci.main.view.fragment.DicBookFragment;
+import com.shannon.xiaoci.main.model.NewsModel;
+import com.shannon.xiaoci.main.model.WordModel;
+import com.shannon.xiaoci.main.model.bean.Word;
+import com.shannon.xiaoci.main.model.dao.DicCollectionDao;
+import com.shannon.xiaoci.main.presenter.CollectionPrenenter;
+import com.shannon.xiaoci.main.presenter.SearchPresenter;
 import com.shannon.xiaoci.main.view.adapter.DictionaryAdapter;
+import com.shannon.xiaoci.main.view.fragment.DicBookFragment;
+import com.shannon.xiaoci.main.view.fragment.NewsFragment;
 import com.shannon.xiaoci.main.view.fragment.SettingFragment;
 import com.shannon.xiaoci.main.view.inter.CollectionViewInter;
 import com.shannon.xiaoci.main.view.inter.SearchViewInter;
-import com.shannon.xiaoci.main.view.presenter.CollectionPrenenter;
-import com.shannon.xiaoci.news.model.NewsModel;
-import com.shannon.xiaoci.news.view.fragment.NewsFragment;
-import com.shannon.xiaoci.search.model.WordModel;
-import com.shannon.xiaoci.search.model.bean.Word;
-import com.shannon.xiaoci.search.presenter.SearchPresenter;
 
 import java.util.ArrayList;
 
@@ -101,11 +101,13 @@ public class MainActivity extends AppCompatActivity implements SearchViewInter,T
         am_acet_input.addTextChangedListener(this);
         am_acet_input.setOnItemClickListener(this);
 
-
+        //搜藏按钮的点击事件
         am_iv_collection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setCollectIcon();
+                DicBookFragment dbf = (DicBookFragment) al_fragments.get(1);
+                dbf.refreshData();
             }
         });
 

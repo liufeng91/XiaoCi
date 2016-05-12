@@ -9,11 +9,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.shannon.xiaoci.R;
-import com.shannon.xiaoci.dicbook.dao.DicCollectionDao;
+import com.shannon.xiaoci.main.model.bean.Word;
+import com.shannon.xiaoci.main.model.dao.DicCollectionDao;
 import com.shannon.xiaoci.remword.view.fragment.WordFragment;
-import com.shannon.xiaoci.search.model.bean.Word;
 
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public class RemWordActivity extends AppCompatActivity implements View.OnClickLi
 
 
         al_word = DicCollectionDao.getAllColl(this);
+
         arw_vp_container = (ViewPager) findViewById(R.id.arw_vp_container);
         arw_vp_container.setPageMargin(30);
         arw_vp_container.setOffscreenPageLimit(3);
@@ -51,7 +53,7 @@ public class RemWordActivity extends AppCompatActivity implements View.OnClickLi
 
 
             int length = al_word.size();
-
+            Toast.makeText(this,"你还有" + length + "个单词没有掌握",Toast.LENGTH_SHORT).show();
             for(int i=0 ; i<length ; i++){
 
                 al_fragment.add(new WordFragment(length,i+1,al_word.get(i)));
